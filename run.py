@@ -14,8 +14,8 @@ def getJsonByUrl(url, addparam=[]):
         'Accept-Language': 'zh-cn',
     }
 
-    params = [('lon', '120.00155639648438'),
-        ('lat', '30.28032875061035')]+addparam
+    params = [('lon', '118.963261'),
+        ('lat', '32.156684')]+addparam
 
     response = requests.get(url, headers=headers, params=params)
     return response.text
@@ -62,7 +62,7 @@ def applyRules(jsonstr, rule):
 
 while True:
     try:
-        res='<p>杭州市余杭区</p><p>更新时间：%s</p>'%datetime.datetime.now()
+        res='<p>南京市栖霞区栖霞山</p><p>更新时间：%s</p>'%datetime.datetime.now()
         for item in urls:
         # item="夕阳"
             stars=getJsonByUrl(urls[item])
