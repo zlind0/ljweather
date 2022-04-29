@@ -1,6 +1,6 @@
 import requests, json, time
 from tabulate import tabulate 
-import time, datetime, os
+import time, datetime, os, sys
 from collections import OrderedDict
 
 def getJsonByUrl(url, addparam=[]):
@@ -43,6 +43,8 @@ lookuptb=OrderedDict([
     ('startTime','开始时间'),
     ('endTime'  ,'结束时间')])
 lookuptb_print=OrderedDict([
+    ('time'     ,'日'),
+    ('date'     ,'日'),
     ('startTime','始'),
     ('endTime'  ,'末'),
     ('pr'       ,'概率'),
@@ -85,7 +87,8 @@ def applyRules(jsonstr, rule):
     tb=[[item[k] for k in column] for item in data]
     tb_print=[[item[k] for k in column_print] for item in data]
     for tb_print_row in tb_print:
-        printstr+="|".join([f"{header_print[i]} {num_process(tb_print_row[i])}" for i in range(len(column_print))])+"\n"
+        date=tb_print_row[0]
+        printstr+="|".join([f"{header_print[i]} {num_process(tb_print_row[i]).replace(date+'T','')}" for i in range(len(column_print))])+"\n"
     return tabulate(tb, header, tablefmt="html")
 
 
@@ -111,4 +114,8 @@ while True:
     except Exception as e: 
         print("Error:", e)
         pass
+    if len(sys.argv)>1 and sys.argv[1]=="once":
+        exit(0)
     time.sleep(3600)
+
+# while :; do notifycmd python3 run.py; sleep 7200; done
